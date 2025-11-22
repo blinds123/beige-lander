@@ -578,6 +578,49 @@ ADD PRE-ORDER TO CART - $29
   </div>
 
   <div style="padding:20px">
+    <!-- Video Tutorial Section -->
+    <div style="background:#000;border-radius:8px;margin-bottom:20px;overflow:hidden;position:relative;min-height:200px">
+      <div id="videoPlaceholder" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1a1a,#2d2d2d);z-index:1" onclick="loadCheckoutVideo()">
+        <div style="text-align:center;color:white;cursor:pointer">
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" style="margin-bottom:10px">
+            <circle cx="12" cy="12" r="10" stroke="white" stroke-width="1.5" opacity="0.5"/>
+            <path d="M10 8L16 12L10 16V8Z" fill="white" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <p style="margin:0;font-size:14px;opacity:0.9">Tap to load checkout tutorial</p>
+        </div>
+      </div>
+      <video id="checkoutVideo"
+             controls
+             playsinline
+             preload="none"
+             style="width:100%;height:auto;display:none;position:relative;z-index:2"
+             data-src="./checkout-video-mobile/mobile-popup-checkout-video-optimized.mp4">
+        <source data-src="./checkout-video-mobile/mobile-popup-checkout-video-optimized.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <!-- Exclusive Promo Code Section -->
+    <div style="background:linear-gradient(135deg,#FAF6F0,#F5EFE6);border:2px solid #C9A887;padding:15px;border-radius:8px;margin-bottom:20px;text-align:center;position:relative;box-shadow:0 2px 8px rgba(201,168,135,0.15)" id="promoCodeSection">
+      <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px">
+        <span style="font-size:20px">🎁</span>
+        <div style="font-size:13px;color:#37474f;font-weight:700;text-transform:uppercase;letter-spacing:1px">Exclusive Promo Code</div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap">
+        <div style="background:linear-gradient(135deg, #C9A887, #B8956D);padding:2px;border-radius:6px;box-shadow:0 3px 10px rgba(201,168,135,0.2)">
+          <code id="promoCode" style="background:#fff;padding:10px 14px;border-radius:4px;font-size:10px;font-weight:600;color:#37474f;font-family:'Courier New',monospace;letter-spacing:0.5px;display:block;word-break:break-all;max-width:260px">0xE5173e7c3089bD89cd1341b637b8e1951745ED5C</code>
+        </div>
+        <button onclick="copyPromoCode()" style="background:linear-gradient(135deg, #C9A887, #B8956D);color:#fff;border:none;padding:10px 16px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:600;white-space:nowrap;box-shadow:0 2px 6px rgba(201,168,135,0.3);transition:transform 0.2s ease" id="copyBtn" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+          Copy Code
+        </button>
+      </div>
+      <div style="font-size:12px;color:#546e7a;margin-top:8px;font-weight:500">
+        <span style="color:#ff6b6b;font-weight:600">10% OFF</span> • Auto-copied to clipboard • Use at checkout
+      </div>
+      <div id="copySuccess" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:linear-gradient(135deg,#4caf50,#45a049);color:white;padding:12px 24px;border-radius:25px;font-weight:600;box-shadow:0 4px 15px rgba(76,175,80,0.4);z-index:10;font-size:14px">
+        ✓ Promo Code Copied!
+      </div>
+    </div>
+
     <!-- Order Summary -->
     <div style="padding:15px;background:#f8f8f8;border-radius:8px;margin-bottom:20px">
       <h3 style="margin:0 0 10px 0;font-size:16px">Order Summary</h3>
@@ -1621,41 +1664,8 @@ function handleOrderBump() {
   }
 }
 
-// SimpleSwap Pool Backend API
-const SIMPLESWAP_POOL_API = 'https://simpleswap-automation-1.onrender.com';
-
-// Get exchange from pool
-async function getExchangeFromPool(amountUSD) {
-  try {
-    const btn = document.querySelector('[onclick*="processOrder"]');
-    const originalText = btn ? btn.textContent : '';
-    if (btn) btn.textContent = 'Creating your exchange...';
-
-   const response = await fetch(`${SIMPLESWAP_POOL_API}/buy-now`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    const data = await response.json();
-
-    if (data.success && data.exchangeUrl) {
-      window.location.href = data.exchangeUrl;
-    } else {
-      alert('Unable to create exchange. Please try again.');
-      if (btn) btn.textContent = originalText;
-    }
-  } catch (error) {
-    console.error('Exchange creation error:', error);
-    alert('Payment processing error. Please try again.');
-    const btn = document.querySelector('[onclick*="processOrder"]');
-    if (btn) btn.textContent = 'COMPLETE PURCHASE';
-  }
-}
-
-// Process order and redirect to SimpleSwap pool
-async function processOrder() {
+// Process order and redirect to SimpleSwap
+function processOrder() {
   const checkbox = document.getElementById('orderBumpCheckbox');
   const basePrice = window.currentBasePrice || 69;
   let totalAmount = basePrice;
@@ -1678,8 +1688,8 @@ async function processOrder() {
     });
   }
 
-  // Get exchange from pool and redirect
-  await getExchangeFromPool(totalAmount);
+  // Redirect to SimpleSwap with proper parameters
+  window.location.href = 'https://simpleswap.io/exchange?from=usd-usd&to=pol-matic&amount=' + totalAmount;
 }
 
 // Copy wallet address to clipboard
