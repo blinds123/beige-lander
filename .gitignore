@@ -1,20 +1,126 @@
-# Don't ignore images
+# Development files
+*.zip
+*.log
+*.pyc
+__pycache__/
+.pytest_cache/
+node_modules/
+.env
+.env.local
+npm-debug.log
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# Documentation and reports (keep only essential)
+*-REPORT*.md
+*-DEPLOYMENT*.md
+*-CHECKLIST*.md
+*-INSTRUCTIONS*.md
+*-STATUS*.md
+*-PLAN*.md
+*-GUIDE*.md
+BUGFIX*.md
+BUCKSBUS*.md
+CHECKOUT*.md
+CLICKFUNNELS*.md
+COMPREHENSIVE*.md
+CRITICAL*.md
+FINAL*.md
+MANUAL*.md
+MASTER*.md
+PLAYWRIGHT*.md
+PRODUCTION*.md
+QUICK*.md
+RUSSELL*.md
+TESTING*.md
+WORDPRESS*.md
+AUTONOMOUS*.md
+AUTOMATED*.md
+TEMPLATE*.md
+deploy-structure.md
+speed-analysis.md
+adding-products-guide.md
+body_content.txt
+NEXT-PRODUCT-SETUP.md
+OPTIMIZATION-PLAN.md
+OPTIMIZATION-RESULTS.md
+REDIRECT-SETUP-PROMPT.md
+ULTRA-PERFORMANCE-IMPLEMENTATION-PLAN.md
+
+# Test files and screenshots
+test-*.js
+test-*.html
+verify-*.js
+*-test.js
+playwright-*.js
+visual-verification.js
+deployment-screenshots/
+test-screenshots/
+.playwright-mcp/
+test-results/
+test-results-*/
+verification-results/
+temp_upload/
+cookies.txt
+*.png
+*.jpeg
+*.jpg
+
+# Alternative HTML versions (keep only index.html)
+index-backup.html
+index-optimized.html
+optimized-*.html
+perfect-optimized.html
+ultimate-optimized.html
+lightning-fast.html
+maximum-performance.html
+ultra-fast.html
+
+# Development scripts
+create-*.js
+competitor-comparison.js
+mobile-netlify-simulation.js
+netlify-simulation.js
+speed-comparison.js
+speed-test.js
+performance-test.js
+full-content.js
+wordpress-deployment.js
+optimize.py
+create_images.py
+generate-manifest.sh
+deploy-*.sh
+test-*.sh
+
+# Build artifacts
+beige-sneaker-theme/
+PRODUCTION-READY-DEPLOYMENT/
+
+# Other
+*.json.backup
+DEPLOYMENT-REPORT.json
+package-lock.json
+sw.js
+router-files/
+_redirects_clean_urls
+_redirects_router
+
+# Local Netlify folder (will use GitHub integration)
+.netlify
+
+# Essential files to keep (explicitly allowed)
+!README.md
+!index.html
 !images/
 !images/**/*.webp
 !images/**/*.png
 !images/**/*.jpg
 !images/**/*.jpeg
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Test results
-test-results/
-test-results-*/
-verification-results/
-.playwright-mcp/
-
-# Node
-node_modules/
-npm-debug.log
+!_headers
+!_redirects
+!package.json
+!full-styles.css
