@@ -6,7 +6,7 @@ redirects = []
 [functions."*"]
 
 [build]
-publish = "/Users/nelsonchan/Downloads/LAUNCH-READY-TEMPLATE copy 3"
+publish = "."
 publishOrigin = "config"
 
 [build.environment]
